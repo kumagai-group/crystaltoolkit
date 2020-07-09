@@ -1,6 +1,7 @@
 import dash
 import dash_html_components as html
 import crystal_toolkit.components as ctc
+from crystal_toolkit.core.scene import Scene, Surface, Arrows
 import numpy as np
 
 from pymatgen import Structure, Lattice
@@ -22,22 +23,24 @@ app.title = "Crystal Toolkit Example Components"
 
 # StructureMoleculeComponent
 
-def get_mesh(chgcar, data_tag='total', isolvl=2.0, step_size = 3):
+def get_mesh(chgcar, data_tag='total', isolvl=4.0, step_size=3):
     vertices, faces, normals, values = measure.marching_cubes_lewiner(chgcar.data[data_tag],
                                                                       level=isolvl,
                                                                       step_size=step_size)
+    print(vertices)
     vertices = vertices/chgcar.data[data_tag].shape  # transform to fractional coordinates
     vertices = np.dot(vertices-0.5, cc.structure.lattice.matrix) # transform to cartesian
     return vertices, faces
 
-cc = Chgcar.from_file('./test_files/chgcar.vasp')
+# cc = Chgcar.from_file('./test_files/chgcar.vasp')
+cc = Chgcar.from_file('./test_files/mgo_chgcar.vasp')
 vertices,faces = get_mesh(cc)
 vertices = vertices
 pos = [vert for triangle in vertices[faces].tolist() for vert in triangle]
 
-add_comp = [ctc.Scene("test", contents=[
-    ctc.Surface(positions=pos),
-    ctc.Arrows(positionPairs=[[[0,0,0], [1,1,1]]]),
+add_comp = [Scene("test", contents=[
+    Surface(positions=pos),
+    # Arrows(positionPairs=[[[0,0,0], [1,1,1]]]),
 ])]
 
 struct_component = ctc.StructureMoleculeComponent(
@@ -49,7 +52,8 @@ struct_component = ctc.StructureMoleculeComponent(
 # it inside a Div of the required size
 app.layout = html.Div([
     ctc.MPComponent.all_app_stores(),  # not required in this minimal example, but usually necessary for interactivity
-    struct_component.standard_layout
+    # struct_component.standard_layout
+    struct_component.layout()
 ])
 
 
