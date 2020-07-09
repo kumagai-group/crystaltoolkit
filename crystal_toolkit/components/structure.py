@@ -878,12 +878,13 @@ class StructureMoleculeComponent(MPComponent):
             axes.visible = show_compass
             scene.contents.append(axes)
 
+        scene = scene.to_json()
         if scene_additions:
             # TODO: need a Scene.from_json() to make this work
-            raise NotImplementedError
+            # raise NotImplementedError
             scene["contents"].append(scene_additions)
 
-        return scene.to_json(), legend.get_legend()
+        return scene, legend.get_legend()
 
     def screenshot_layout(self):
         """
