@@ -539,7 +539,7 @@ class StructureMoleculeComponent(MPComponent):
         screenshot_layout = html.Div(
             [
                 Button(
-                    [Icon(), html.Span(), "Download Image"],
+                    [Icon(kind="download"), html.Span(), "Download Image"],
                     kind="primary",
                     id=self.id("screenshot_button"),
                 )
@@ -807,7 +807,7 @@ class StructureMoleculeComponent(MPComponent):
                             )
                         else:
                             graph = MoleculeGraph.with_local_env_strategy(
-                                input, bonding_strategy
+                                input, bonding_strategy, reorder=False
                             )
                 except:
                     # for some reason computing bonds failed, so let's not have any bonds(!)

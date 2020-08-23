@@ -1,7 +1,0 @@
-crystal\_toolkit.Simple3DSceneComponent module
-==============================================
-
-.. automodule:: crystal_toolkit.Simple3DSceneComponent
-   :members:
-   :undoc-members:
-   :show-inheritance:
