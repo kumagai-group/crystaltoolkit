@@ -134,6 +134,7 @@ def get_site_scene(
                 positionPairs=[[position, bond_midpoint.tolist()]],
                 color=color,
                 radius=bond_radius,
+                tooltip=f"Length {connected_site.dist:.2f}"
             )
             bonds.append(cylinder)
             all_positions.append(connected_position.tolist())

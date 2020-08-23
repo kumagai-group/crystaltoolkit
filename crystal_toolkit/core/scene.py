@@ -321,11 +321,12 @@ class Cylinders(Primitive):
     visible: bool = None
     clickable: bool = False
     reference: Optional[str] = None
+    tooltip: str = None
     _meta: Any = None
 
     @property
     def key(self):
-        return f"cylinder_{self.color}_{self.radius}_{self.reference}"
+        return f"cylinder_{self.color}_{self.radius}_{self.reference}_{self.tooltip}"
 
     @classmethod
     def merge(cls, cylinder_list):
@@ -344,6 +345,7 @@ class Cylinders(Primitive):
             color=cylinder_list[0].color,
             radius=cylinder_list[0].radius,
             visible=cylinder_list[0].visible,
+            tooltip=cylinder_list[0].tooltip
         )
 
     @property
