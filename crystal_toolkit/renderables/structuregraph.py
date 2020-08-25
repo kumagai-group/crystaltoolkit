@@ -13,6 +13,8 @@ from matplotlib.cm import get_cmap
 
 from typing import Optional
 
+from vise.util.structure_symmetrizer import StructureSymmetrizer
+
 
 def _get_sites_to_draw(
     self, draw_image_atoms=True, bonded_sites_outside_unit_cell=False
@@ -92,6 +94,7 @@ def get_structure_graph_scene(
     explicitly_calculate_polyhedra_hull=False,
     legend: Optional[Legend] = None,
     group_by_symmetry: bool = True,
+    draw_polyhedra: bool = True,
 ) -> Scene:
 
     origin = origin or list(
@@ -133,13 +136,10 @@ def get_structure_graph_scene(
 
     idx_to_wyckoff = {}
     if group_by_symmetry:
-        sga = SpacegroupAnalyzer(self.structure)
-        struct_sym = sga.get_symmetrized_structure()
-        for equiv_idxs, wyckoff in zip(
-            struct_sym.equivalent_indices, struct_sym.wyckoff_symbols
-        ):
-            for idx in equiv_idxs:
-                idx_to_wyckoff[idx] = wyckoff
+        symmetrizer = StructureSymmetrizer(self.structure)
+        for name, site in symmetrizer.sites.items():
+            for idx in site.equivalent_atoms:
+                idx_to_wyckoff[idx] = name
 
     for (idx, jimage) in sites_to_draw:
 
@@ -184,15 +184,16 @@ def get_structure_graph_scene(
             connected_sites_colors=connected_sites_colors,
             connected_sites_not_drawn_colors=connected_sites_not_drawn_colors,
             explicitly_calculate_polyhedra_hull=explicitly_calculate_polyhedra_hull,
+            draw_polyhedra=draw_polyhedra,
             legend=legend,
         )
         for scene in site_scene.contents:
             if group_by_symmetry and scene.name == "atoms" and idx in idx_to_wyckoff:
                 # will rename to e.g. atoms_N_4e
-                scene.name = f"atoms_{site_scene.name}_{idx_to_wyckoff[idx]}"
+                scene.name = f"atoms_{idx_to_wyckoff[idx]}"
                 # this is a proof-of-concept to demonstrate hover labels, could create label
                 # automatically from site properties instead
-                scene.contents[0].tooltip = f"{site_scene.name} ({idx_to_wyckoff[idx]})"
+                scene.contents[0].tooltip = f"{idx_to_wyckoff[idx]}"
             primitives[scene.name] += scene.contents
 
     primitives["unit_cell"].append(self.structure.lattice.get_scene())
