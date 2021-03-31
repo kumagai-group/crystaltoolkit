@@ -93,6 +93,7 @@ def get_structure_graph_scene(
     edge_weight_color_scale="coolwarm",
     explicitly_calculate_polyhedra_hull=False,
     legend: Optional[Legend] = None,
+    idx_to_wyckoff: dict = None,
     group_by_symmetry: bool = True,
     draw_polyhedra: bool = True,
 ) -> Scene:
@@ -134,8 +135,8 @@ def get_structure_graph_scene(
 
             color_edges = True
 
-    idx_to_wyckoff = {}
-    if group_by_symmetry:
+    idx_to_wyckoff = idx_to_wyckoff or {}
+    if idx_to_wyckoff is None and group_by_symmetry:
         sga = SpacegroupAnalyzer(self.structure)
         struct_sym = sga.get_symmetrized_structure()
         for equiv_idxs, wyckoff in zip(
