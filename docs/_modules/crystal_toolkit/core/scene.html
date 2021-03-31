@@ -1,40 +1,43 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>crystal_toolkit.core.scene &mdash; Crystal Toolkit  documentation</title>
   
 
   
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
   
+  
+
   
   
     <link rel="canonical" href="https://crystaltoolkit.org_modules/crystal_toolkit/core/scene.html"/>
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -73,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -95,6 +99,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -129,13 +134,17 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../crystal_toolkit.html">crystal_toolkit</a> &raquo;</li>
         
       <li>crystal_toolkit.core.scene</li>
     
@@ -162,10 +171,10 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module gives a Python interface to generate JSON for the</span>
-<span class="sd">Simple3DSceneComponent. To use, create a Scene whose contents can either be a</span>
+<span class="sd">CrystalToolkitSceneComponent. To use, create a Scene whose contents can either be a</span>
 <span class="sd">a list of any of the geometric primitives defined below (e.g. Spheres,</span>
 <span class="sd">Cylinders, etc.) or can be another Scene. Then use scene_to_json() to convert</span>
-<span class="sd">the Scene to the JSON format to pass to Simple3DSceneComponent&#39;s data attribute.</span>
+<span class="sd">the Scene to the JSON format to pass to CrystalToolkitSceneComponent&#39;s data attribute.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
@@ -239,7 +248,7 @@
 <span class="sd">        encoder.</span>
 
 <span class="sd">        :param scene: A Scene object</span>
-<span class="sd">        :return: dict in a format that can be parsed by Simple3DSceneComponent</span>
+<span class="sd">        :return: dict in a format that can be parsed by CrystalToolkitSceneComponent</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">merged_scene</span> <span class="o">=</span> <span class="n">Scene</span><span class="p">(</span>
@@ -474,6 +483,7 @@
     <span class="n">radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;cylinders&quot;</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># private field</span>
     <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tooltip</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">clickable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">reference</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_meta</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
@@ -751,20 +761,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Crystal Toolkit Development Team
+        &#169; Copyright 2019, Crystal Toolkit Development Team.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -772,7 +787,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

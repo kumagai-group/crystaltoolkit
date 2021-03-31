@@ -1,4 +1,5 @@
-from pymatgen import Specie, Element, Molecule
+from pymatgen.core.periodic_table import Specie, Element
+from pymatgen.core.structure import Molecule
 from pymatgen.core.structure import SiteCollection, Site
 from pymatgen.analysis.molecule_structure_comparator import CovalentRadius
 from pymatgen.util.string import unicodeify_species
@@ -14,7 +15,7 @@ from sklearn.preprocessing import LabelEncoder
 from matplotlib.cm import get_cmap
 from webcolors import html5_parse_legacy_color, html5_serialize_simple_color
 
-from typing import Union, Optional, Tuple, Dict, List
+from typing import Union, Optional, Tuple, Dict, List, Any
 
 import warnings
 import numpy as np
@@ -415,7 +416,7 @@ class Legend(MSONable):
         # and then move this to pymatgen string utils ...
         return unicodeify_species(str(sp))
 
-    def get_legend(self) -> Dict[str, str]:
+    def get_legend(self) -> Dict[str, Any]:
 
         # decide what we want the labels to be
         if self.color_scheme in ("Jmol", "VESTA", "accessible"):
@@ -436,7 +437,14 @@ class Legend(MSONable):
 
         legend = {k: ", ".join(sorted(list(set(v)))) for k, v in legend.items()}
 
+        color_options = []
+        for site_prop_type in ("scalar", "categorical"):
+            if site_prop_type in self.site_prop_types:
+                for prop in self.site_prop_types[site_prop_type]:
+                    color_options.append(prop)
+
         return {
             "composition": self.site_collection.composition.as_dict(),
             "colors": legend,
+            "available_color_schemes": color_options,
         }

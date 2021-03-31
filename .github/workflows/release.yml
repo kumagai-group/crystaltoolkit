@@ -11,42 +11,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: master
+        ref: main
         fetch-depth: 2
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
-    - name: Install poetry
+    - name: Install dependencies
       run: |
         pip install --upgrade pip && pip install --no-cache-dir poetry
-        poetry config virtualenvs.in-project false
-        poetry config virtualenvs.path ~/.virtualenvs
-    - name: Cache dependencies
-      uses: actions/cache@v1
-      id: cache
-      with:
-        path: ~/.virtualenvs
-        key: poetry-${{ hashFiles('**/poetry.lock') }}
-        restore-keys: |
-          poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Install dependencies
-      run: poetry install
-      if: steps.cache.outputs.cache-hit != 'true'
-    - name: Set up git
-      run: |
-        git config --global user.name 'Matthew Horton'
-        git config --global user.email 'mkhorton@users.noreply.github.com'
-        git status
-    - name: Set new version
-      run: |
-        export VERSION=$(date '+%Y.%m.%d')
-        sed -i "s/__version__.*/__version__ = \"$VERSION\"/g" crystal_toolkit/__init__.py
-        sed -i "s/^version.*/version = \"$VERSION\"/g" pyproject.toml
-        sed -i "s/version.*/version=\"$VERSION\",/g" setup.py 
-        git status
-        git diff --quiet || git commit -am "Set version"
-        git push
+        poetry install -E server -E fermi
     - name: Build and publish
       run: |
         poetry build
