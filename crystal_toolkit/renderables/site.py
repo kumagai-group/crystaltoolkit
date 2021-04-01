@@ -27,6 +27,7 @@ def get_site_scene(
     explicitly_calculate_polyhedra_hull: bool = False,
     bond_radius: float = 0.1,
     legend: Optional[Legend] = None,
+    name: Optional[str] = None
 ) -> Scene:
     """
 
@@ -83,10 +84,11 @@ def get_site_scene(
                 phiStart = phi_frac_start * np.pi * 2
                 phiEnd = phi_frac_end * np.pi * 2
 
-            name = str(sp)
-            if occu != 1.0:
-                name += " ({}% occupancy)".format(occu)
-            name += f" ({position[0]:.3f}, {position[1]:.3f}, {position[2]:.3f})"
+            if not name:
+                name = str(sp)
+                if occu != 1.0:
+                    name += " ({}% occupancy)".format(occu)
+                name += f" ({position[0]:.3f}, {position[1]:.3f}, {position[2]:.3f})"
 
             sphere = Spheres(
                 positions=[position],
@@ -134,6 +136,7 @@ def get_site_scene(
                 positionPairs=[[position, bond_midpoint.tolist()]],
                 color=color,
                 radius=bond_radius,
+                tooltip=f"Length {connected_site.dist:.2f}"
             )
             bonds.append(cylinder)
             all_positions.append(connected_position.tolist())
