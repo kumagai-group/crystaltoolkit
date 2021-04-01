@@ -108,6 +108,7 @@ Jmol:
   Yb: [0, 191, 56]
   Zn: [125, 128, 176]
   Zr: [148, 224, 224]
+  X: [10, 10, 10]
 VESTA:
   Ac: [112, 171, 250]
   Ag: [192, 192, 192]
@@ -218,6 +219,7 @@ VESTA:
   Yb: [0, 191, 56]
   Zn: [143, 143, 129]
   Zr: [0, 255, 0]
+  X: [10, 10, 10]
 Extras:  # for custom element types
   Xbcp: [0, 0, 255]  # bond critical point
   Xrcp: [255, 0, 0]  # ring critical point
